@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+coverage/
+dist/
+build/
+.Rhistory
+*.zip
+.vscode/

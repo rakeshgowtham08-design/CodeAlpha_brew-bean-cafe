@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — Brew & Bean Café</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.check-anim{ width:90px;height:90px;border-radius:50%;background:var(--ok);color:#fff;font-size:44px;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pop{ from{transform:scale(0);} to{transform:scale(1);} }
+</style>
+</head>
+<body>
+<nav class="nav scrolled"><div class="nav-inner">
+  <a href="/" class="logo">☕ BREW & BEAN</a>
+  <div class="nav-links"><a href="/">Home</a><a href="/menu.html">Menu</a></div>
+  <div class="nav-icons"><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a><button class="hamburger" id="hamburgerBtn">☰</button></div>
+</div><div id="mobileMenu"><a href="/">Home</a></div></nav>
+
+<main class="container center" style="max-width:520px;padding:170px 28px 100px;">
+  <div class="check-anim">✓</div>
+  <h1 style="font-size:30px;">☕ Order Confirmed!</h1>
+  <p class="muted" style="margin:10px 0 26px;">Thank you for choosing Brew & Bean.</p>
+  <div id="root" class="summary-card" style="text-align:left;"><p class="muted">Loading…</p></div>
+  <a id="trackLink" href="/tracking.html" class="btn gold full mt">Track My Order</a>
+</main>
+
+<footer><div class="container"><div class="footer-bottom">© 2026 Brew & Bean Café. All rights reserved.</div></div></footer>
+
+<script src="/js/common.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id');
+async function load() {
+  if (!id) {
+    document.getElementById('root').textContent = 'No order was specified. Your recent orders are available from order tracking.';
+    document.getElementById('trackLink').href = '/tracking.html';
+    return;
+  }
+  document.getElementById('trackLink').href = '/tracking.html?id=' + id;
+  try {
+    const { order } = await api('/orders/' + id);
+    const eta = order.deliveryOption === 'pickup' ? '15 minutes' : order.deliveryOption === 'express' ? '15–20 minutes' : '30–40 minutes';
+    document.getElementById('root').innerHTML = `
+      <div class="summary-line"><span>Order Number</span><span>#${order._id.slice(-6).toUpperCase()}</span></div>
+      <div class="summary-line"><span>Estimated Time</span><span>${eta}</span></div>
+      <div class="summary-line total"><span>Total Amount</span><span>${rupees(order.total)}</span></div>`;
+  } catch (err) {
+    document.getElementById('root').textContent = err.message;
+  }
+}
+load();
+</script>
+</body>
+</html>

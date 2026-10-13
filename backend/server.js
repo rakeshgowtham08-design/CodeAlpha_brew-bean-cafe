@@ -56,7 +56,7 @@ app.use('/', express.static(path.join(__dirname, '..', 'frontend')));
 
 async function start() {
   await connectDB();
-  const server = app.listen(PORT, () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Brew & Bean running at http://localhost:${PORT}`);
     console.log(`Admin dashboard at    http://localhost:${PORT}/admin`);
   });

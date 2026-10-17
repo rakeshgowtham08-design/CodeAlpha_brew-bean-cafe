@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-  <rect width="800" height="600" fill="#efe4d4"/>
-  <circle cx="400" cy="270" r="190" fill="#d7a56d"/>
-  <circle cx="400" cy="270" r="145" fill="#f6efe5"/>
-  <text x="400" y="320" text-anchor="middle" font-size="180" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">☕</text>
-  <text x="400" y="530" text-anchor="middle" fill="#513b2e" font-family="Georgia, serif" font-size="30">BREW &amp; BEAN · COFFEE</text>
-</svg>

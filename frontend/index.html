@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brew & Bean Café — Where Every Cup Tells a Story</title>
+<meta name="description" content="A premium café serving handcrafted coffee, bakes, and timeless café moments since 1998.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">☕ BREW & BEAN</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="/about.html">About</a>
+      <a href="/#offers">Offers</a>
+      <a href="/about.html#contact">Contact</a>
+      <a href="/tracking.html">Track Order</a>
+    </div>
+    <div class="nav-icons">
+      <a href="menu.html" title="Search" aria-label="Search menu">🔍</a>
+      <a href="#" class="nav-user-slot"></a>
+      <a href="/cart.html" title="Cart">🛒<span class="badge-dot cart-badge">0</span></a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+    </div>
+  </div>
+  <div id="mobileMenu">
+    <a href="/">Home</a><a href="menu.html">Menu</a><a href="/about.html">About</a>
+    <a href="/#offers">Offers</a><a href="/tracking.html">Track Order</a><a href="/cart.html">Cart</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="beans" aria-hidden="true">
+    <span class="bean" style="top:15%;left:8%;">🫘</span>
+    <span class="bean" style="top:60%;left:85%;animation-delay:3s;">🫘</span>
+    <span class="bean" style="top:80%;left:20%;animation-delay:6s;">✨</span>
+    <span class="bean" style="top:30%;left:75%;animation-delay:2s;">✨</span>
+  </div>
+  <div class="hero-inner">
+    <div class="eyebrow">Est. 1998 · Premium Café</div>
+    <h1>Where Every Cup<br>Tells a Story.</h1>
+    <p>Freshly brewed coffee, handcrafted bites, and timeless café moments — crafted the old way, served the modern way.</p>
+    <div class="btns">
+      <a href="menu.html" class="btn gold">Order Now</a>
+      <a href="menu.html" class="btn outline">Explore Menu</a>
+    </div>
+  </div>
+  <div class="steam" aria-hidden="true"><span></span><span></span><span></span></div>
+</header>
+
+<section class="welcome">
+  <div class="container welcome-grid">
+    <div class="reveal">
+      <div class="eyebrow" style="color:var(--caramel);text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:700;">More Than Just Coffee.</div>
+      <h2 style="font-size:clamp(26px,4vw,36px);margin-top:10px;">A little heritage in every cup.</h2>
+      <p class="muted" style="margin-top:16px;max-width:52ch;">From the first aroma of freshly brewed coffee to the last bite of your favorite dessert, Brew & Bean brings together timeless flavors and modern café culture.</p>
+      <div class="est-badge">☕ EST. 1998 — Still family-run</div>
+    </div>
+    <img class="reveal" src="/images/cafe-window.jpg" alt="Sunlit café seating beside the window">
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Handpicked for you</div>
+      <h2>Our Café Favorites</h2>
+      <p>The cups and plates our regulars keep coming back for.</p>
+    </div>
+    <div class="product-grid reveal" id="featuredGrid">
+      <p class="muted">Loading favorites…</p>
+    </div>
+  </div>
+</section>
+
+<section class="offers" id="offers">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Limited time</div>
+      <h2>Special Offers</h2>
+      <p>A little something extra, for every kind of visit.</p>
+    </div>
+    <div class="offer-grid reveal">
+      <div class="offer-card">
+        <h3>Morning Coffee Combo</h3>
+        <div class="desc">Coffee + Croissant</div>
+        <div class="price">₹249</div>
+        <a href="/menu.html" class="btn gold small">Order Now</a>
+      </div>
+      <div class="offer-card">
+        <h3>Weekend Family Combo</h3>
+        <div class="desc">4 Coffees + 2 Sandwiches + 2 Desserts</div>
+        <div class="price">₹699</div>
+        <a href="/menu.html" class="btn gold small">Order Now</a>
+      </div>
+      <div class="offer-card">
+        <h3>Student Special</h3>
+        <div class="desc">Any Coffee + Snack</div>
+        <div class="price">₹199</div>
+        <a href="/menu.html" class="btn gold small">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">What people say</div>
+      <h2>Loved by regulars, old and new.</h2>
+    </div>
+    <div class="review-grid reveal">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>“Beautiful atmosphere, amazing coffee and wonderful service.”</p>
+        <div class="review-person"><div class="avatar">R</div><div><strong>Rahul</strong><div class="muted" style="font-size:12px;">Regular since 2021</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>“It reminds me of the old cafés I used to visit, but with a modern touch.”</p>
+        <div class="review-person"><div class="avatar">M</div><div><strong>Meera</strong><div class="muted" style="font-size:12px;">Regular since 2019</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>“Perfect place for both coffee lovers and families.”</p>
+        <div class="review-person"><div class="avatar">A</div><div><strong>Arjun</strong><div class="muted" style="font-size:12px;">Regular since 2022</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom:0;">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">@brewandbeancafe</div>
+      <h2>Moments at Brew & Bean</h2>
+    </div>
+  </div>
+  <div class="insta-grid reveal">
+    <div class="insta-item"><img src="/images/cafe-corner.jpg" alt="Quiet café corner with warm wood"><div class="overlay">❤️ 214</div></div>
+    <div class="insta-item"><img src="/images/cafe-dining-room.jpg" alt="Elegant café dining room"><div class="overlay">❤️ 189</div></div>
+    <div class="insta-item"><img src="/images/cafe-counter.jpg" alt="Café counter and coffee bar"><div class="overlay">❤️ 302</div></div>
+    <div class="insta-item"><img src="/images/cafe-lounge.jpg" alt="Relaxed café lounge seating"><div class="overlay">❤️ 156</div></div>
+    <div class="insta-item"><img src="/images/cafe-brass-interior.jpg" alt="Warm modern café interior details"><div class="overlay">❤️ 241</div></div>
+    <div class="insta-item"><img src="/images/cafe-evening.jpg" alt="Café glowing softly in the evening"><div class="overlay">❤️ 178</div></div>
+  </div>
+  <div class="center" style="margin-top:34px;"><a href="#" class="btn outline-dark">Follow Our Journey</a></div>
+</section>
+
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">☕ BREW & BEAN</div>
+        <div class="footer-tagline">"Where Every Cup Tells a Story."</div>
+        <p style="font-size:14px;max-width:34ch;">Monday – Friday: 8:00 AM – 10:00 PM<br>Saturday – Sunday: 8:00 AM – 11:00 PM</p>
+        <div class="social-row">
+          <a href="#" title="Instagram">📷</a><a href="#" title="Facebook">📘</a><a href="#" title="YouTube">▶️</a><a href="#" title="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div><h4>Explore</h4><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a><a href="#contact">Contact</a></div>
+      <div><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a></div>
+      <div><h4>Contact</h4>
+        <p style="font-size:14px;">📍 MG Road, Your City<br>📞 +91 98765 43210<br>✉ hello@brewandbean.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Brew & Bean Café. All rights reserved.</div>
+  </div>
+</footer>
+<script src="js/common.js"></script>
+<script>
+async function loadFeatured() {
+  const grid = document.getElementById('featuredGrid');
+  try {
+    const { products } = await api('/products');
+    const featured = products.filter((p) => p.badge).slice(0, 6);
+    const list = featured.length ? featured : products.slice(0, 6);
+    grid.innerHTML = list.map(cardHTML).join('');
+    bindAddButtons();
+  } catch (err) {
+    grid.textContent = `Couldn't load products — make sure the backend is running and seeded. (${err.message})`;
+  }
+}
+function cardHTML(p) {
+  const badgeLabel = { bestseller: '🔥 BESTSELLER', favorite: '⭐ FAVORITE', new: '✨ NEW' }[p.badge] || '';
+  return `
+    <div class="product-card">
+      <a class="imgwrap" href="/product.html?id=${encodeURIComponent(p._id)}">
+        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy">
+        ${badgeLabel ? `<span class="product-badge ${escapeHTML(p.badge)}">${badgeLabel}</span>` : ''}
+        <button class="wishlist-btn" data-wish="${escapeHTML(p._id)}">♡</button>
+      </a>
+      <div class="product-body">
+        <div class="cat-tag"><span class="veg-dot ${p.isVeg ? '' : 'non'}"></span>${escapeHTML(p.category)}</div>
+        <h3><a href="/product.html?id=${encodeURIComponent(p._id)}">${escapeHTML(p.name)}</a></h3>
+        <div class="desc">${escapeHTML(p.description)}</div>
+        <div class="rating">★ ${Number(p.rating).toFixed(1)}</div>
+        <div class="product-foot">
+          <span class="price-tag">${rupees(p.price)}</span>
+          <button class="add-btn" data-add="${escapeHTML(p._id)}">Add to Cart</button>
+        </div>
+      </div>
+    </div>`;
+}
+function bindAddButtons() {
+  document.querySelectorAll('[data-add]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      Cart.add(btn.dataset.add, 1);
+      btn.textContent = 'Added ✓';
+      setTimeout(() => (btn.textContent = 'Add to Cart'), 1200);
+    });
+  });
+  document.querySelectorAll('[data-wish]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.classList.toggle('active');
+      btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
+    });
+  });
+}
+loadFeatured();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Brew & Bean Café</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="nav scrolled"><div class="nav-inner">
+  <a href="/" class="logo">☕ BREW & BEAN</a>
+  <div class="nav-links"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a></div>
+  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
+  <button class="hamburger" id="hamburgerBtn">☰</button></div>
+</div><div id="mobileMenu"><a href="/">Home</a><a href="/menu.html">Menu</a></div></nav>
+
+<header class="page-header"><div class="container"><h1>Checkout</h1><p>Almost there — just a few details.</p></div></header>
+
+<main class="container" style="padding:50px 0 90px;">
+  <div id="root"><p class="muted">Loading…</p></div>
+</main>
+
+<footer><div class="container"><div class="footer-bottom">© 2026 Brew & Bean Café. All rights reserved.</div></div></footer>
+
+<script src="/js/common.js"></script>
+<script>
+let cartItems = [], productMap = {}, deliveryOption = 'standard', paymentMethod = 'cod';
+
+async function init() {
+  const user = getUser();
+  if (!user) { window.location.href = '/login.html?next=/checkout.html'; return; }
+
+  cartItems = Cart.read();
+  if (cartItems.length === 0) { document.getElementById('root').innerHTML = `<p class="muted">Your cart is empty. <a href="/menu.html" style="text-decoration:underline;">Browse the menu →</a></p>`; return; }
+
+  const results = await Promise.all(cartItems.map((i) => api('/products/' + i.productId).then((r) => r.product).catch(() => null)));
+  results.forEach((p) => { if (p) productMap[p._id] = p; });
+
+  render(user);
+}
+
+function totals() {
+  const subtotal = cartItems.reduce((s, i) => s + (productMap[i.productId]?.price || 0) * i.qty, 0);
+  const deliveryFee = deliveryOption === 'pickup' ? 0 : (deliveryOption === 'express' ? 90 : 40);
+  const gst = Math.round(subtotal * 0.05);
+  const total = subtotal + deliveryFee + gst;
+  return { subtotal, deliveryFee, gst, total };
+}
+
+function render(user) {
+  const t = totals();
+  document.getElementById('root').innerHTML = `
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:start;">
+      <div>
+        <h3 style="margin-bottom:14px;">Customer Information</h3>
+        <div class="form-row">
+          <div class="field"><label>Name</label><input id="cName" value="${user.name}"></div>
+          <div class="field"><label>Name</label><input id="cName" value="${escapeHTML(user.name)}"></div>
+          <div class="field"><label>Phone</label><input id="cPhone" value="${escapeHTML(user.phone || '')}"></div>
+        </div>
+        <div class="field"><label>Email</label><input id="cEmail" value="${user.email}"></div>
+  <div class="field"><label>Email</label><input id="cEmail" value="${escapeHTML(user.email)}"></div>
+
+        <h3 style="margin:30px 0 14px;">Delivery Address</h3>
+        <div class="form-row">
+          <div class="field"><label>House / Flat</label><input id="aHouse"></div>
+          <div class="field"><label>Street</label><input id="aStreet"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>City</label><input id="aCity"></div>
+          <div class="field"><label>State</label><input id="aState"></div>
+        </div>
+        <div class="field" style="max-width:200px;"><label>PIN code</label><input id="aPincode"></div>
+
+        <h3 style="margin:30px 0 14px;">Delivery Options</h3>
+        <div id="deliveryOptions"></div>
+
+        <h3 style="margin:30px 0 14px;">Payment</h3>
+        <div id="paymentOptions"></div>
+      </div>
+
+      <div class="summary-card">
+        <h3 style="margin-bottom:16px;">Order Summary</h3>
+        ${cartItems.map((i) => { const p = productMap[i.productId]; return p ? `<div class="summary-line"><span>${p.name} × ${i.qty}</span><span>${rupees(p.price*i.qty)}</span></div>` : ''; }).join('')}
+          ${cartItems.map((i) => { const p = productMap[i.productId]; return p ? `<div class="summary-line"><span>${escapeHTML(p.name)} × ${escapeHTML(i.qty)}</span><span>${rupees(p.price*Number(i.qty))}</span></div>` : ''; }).join('')}
+        <div class="summary-line"><span>Subtotal</span><span id="sSubtotal">${rupees(t.subtotal)}</span></div>
+        <div class="summary-line"><span>Delivery</span><span id="sDelivery">${rupees(t.deliveryFee)}</span></div>
+        <div class="summary-line"><span>GST (5%)</span><span id="sGst">${rupees(t.gst)}</span></div>
+        <div class="summary-line total"><span>Total</span><span id="sTotal">${rupees(t.total)}</span></div>
+        <button class="btn full gold" id="placeOrderBtn" style="margin-top:18px;">Place Order</button>
+        <div id="orderAlert"></div>
+      </div>
+    </div>`;
+
+  renderDeliveryOptions();
+  renderPaymentOptions();
+  document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
+}
+
+function renderDeliveryOptions() {
+  const opts = [
+    { id: 'standard', label: 'Standard Delivery', note: '₹40 · 30–40 min' },
+    { id: 'express', label: 'Express Delivery', note: '₹90 · 15–20 min' },
+    { id: 'pickup', label: 'Pickup From Café', note: 'Free · ready in 15 min' },
+  ];
+  const el = document.getElementById('deliveryOptions');
+  el.innerHTML = opts.map((o) => `
+    <div class="radio-card ${deliveryOption === o.id ? 'selected' : ''}" data-delivery="${o.id}">
+      <input type="radio" name="delivery" ${deliveryOption === o.id ? 'checked' : ''}>
+      <div><strong>${o.label}</strong><div class="muted" style="font-size:13px;">${o.note}</div></div>
+    </div>`).join('');
+  el.querySelectorAll('[data-delivery]').forEach((card) => card.onclick = () => { deliveryOption = card.dataset.delivery; refreshTotals(); renderDeliveryOptions(); });
+}
+function renderPaymentOptions() {
+  const opts = [
+    { id: 'upi', label: 'UPI' }, { id: 'card', label: 'Credit / Debit Card' },
+    { id: 'cod', label: 'Cash on Delivery' }, { id: 'pay_at_cafe', label: 'Pay at Café' },
+  ];
+  const el = document.getElementById('paymentOptions');
+  el.innerHTML = opts.map((o) => `
+    <div class="radio-card ${paymentMethod === o.id ? 'selected' : ''}" data-payment="${o.id}">
+      <input type="radio" name="payment" ${paymentMethod === o.id ? 'checked' : ''}><strong>${o.label}</strong>
+    </div>`).join('');
+  el.querySelectorAll('[data-payment]').forEach((card) => card.onclick = () => { paymentMethod = card.dataset.payment; renderPaymentOptions(); });
+}
+function refreshTotals() {
+  const t = totals();
+  document.getElementById('sDelivery').textContent = rupees(t.deliveryFee);
+  document.getElementById('sTotal').textContent = rupees(t.total);
+}
+
+async function placeOrder() {
+  const alertBox = document.getElementById('orderAlert');
+  const btn = document.getElementById('placeOrderBtn');
+  btn.disabled = true; btn.textContent = 'Placing order…';
+
+  const payload = {
+    items: cartItems.map((i) => ({ productId: i.productId, quantity: i.qty })),
+    customer: { name: document.getElementById('cName').value, phone: document.getElementById('cPhone').value, email: document.getElementById('cEmail').value },
+    address: deliveryOption === 'pickup' ? undefined : {
+      house: document.getElementById('aHouse').value, street: document.getElementById('aStreet').value,
+      city: document.getElementById('aCity').value, state: document.getElementById('aState').value, pincode: document.getElementById('aPincode').value,
+    },
+    deliveryOption, paymentMethod,
+  };
+
+  try {
+    const { order } = await api('/orders', { method: 'POST', body: JSON.stringify(payload) });
+    Cart.clear();
+    window.location.href = `/order-confirmation.html?id=${order._id}`;
+  } catch (err) {
+    alertBox.textContent = err.message;
+    alertBox.className = 'alert error';
+      alertBox.textContent = err.message;
+      alertBox.className = 'alert error';
+    btn.disabled = false; btn.textContent = 'Place Order';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

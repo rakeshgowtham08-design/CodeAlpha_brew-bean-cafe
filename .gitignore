@@ -1,0 +1,15 @@
+node_modules/
+.env
+*.log
+
+# Mac files
+.DS_Store
+.Rhistory
+
+# Local archives and duplicate copies
+brew-bean-admin.zip
+brew-bean-admin/
+brew-bean-admin 2/
+
+# Local admin password reset utility
+backend:reset admin password.js

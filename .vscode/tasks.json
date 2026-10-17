@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Brew & Bean: Start Express backend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["start"],
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".*"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Brew & Bean running at http://localhost:4000"
+        }
+      }
+    }
+  ]
+}

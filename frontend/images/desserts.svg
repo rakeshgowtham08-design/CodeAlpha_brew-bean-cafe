@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f0dfe3"/>
+  <circle cx="400" cy="270" r="190" fill="#c68c9a"/>
+  <circle cx="400" cy="270" r="145" fill="#fbf0f1"/>
+  <text x="400" y="320" text-anchor="middle" font-size="180" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">🍰</text>
+  <text x="400" y="530" text-anchor="middle" fill="#633d47" font-family="Georgia, serif" font-size="30">BREW &amp; BEAN · DESSERTS</text>
+</svg>

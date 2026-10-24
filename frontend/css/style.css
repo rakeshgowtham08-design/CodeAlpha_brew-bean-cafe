@@ -54,12 +54,14 @@ button{ font-family:'Inter',sans-serif; cursor:pointer; }
 .nav-links a:hover{ color:var(--caramel);}
 .nav-icons{ display:flex; align-items:center; gap:18px; font-size:18px;}
 .nav-icons a{ position:relative; }
+.nav-logout{ font-size:15px; padding:6px 12px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--espresso); font-weight:500; white-space:nowrap;}
+.nav-logout:hover{ border-color:var(--caramel); color:var(--caramel);}
 .badge-dot{ position:absolute; top:-6px; right:-9px; background:var(--gold); color:var(--espresso);
   font-size:10px; font-weight:700; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center;}
 .hamburger{ display:none; font-size:24px; background:none; border:none; }
 #mobileMenu{ display:none; flex-direction:column; gap:16px; padding:18px 28px 24px; background:var(--cream); border-top:1px solid var(--line);}
 #mobileMenu.open{ display:flex; }
-@media(max-width:860px){ .nav-links{ display:none;} .hamburger{ display:block;} }
+@media(max-width:860px){ .nav-links{ display:none;} .hamburger{ display:block;} .nav-logout{ display:none;} }
 
 /* ---- Hero ---- */
 .hero{ position:relative; min-height:92vh; display:flex; align-items:center; color:#fff; overflow:hidden;
@@ -229,3 +231,7 @@ input:focus, select:focus, textarea:focus{ border-color:var(--caramel);}
 .muted{ color:var(--muted);}
 .center{ text-align:center;}
 .mt{ margin-top:40px;}
+
+.order-card{ border:1px solid var(--line); border-radius:var(--radius); background:var(--card); padding:20px; margin:16px 0; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
+.order-card:hover{ transform:translateY(-2px); box-shadow:var(--shadow);}
+.order-card.empty-cell{ cursor:default; }

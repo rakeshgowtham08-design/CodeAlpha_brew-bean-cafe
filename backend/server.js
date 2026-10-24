@@ -18,6 +18,11 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
+// --- Health check ---
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', service: 'brew-bean-cafe' });
+});
+
 // --- API ---
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -30,9 +35,9 @@ app.use('/', express.static(path.join(__dirname, '..', 'frontend')));
 
 async function start() {
   await connectDB();
-  app.listen(PORT, () => {
-    console.log(`Brew & Bean running at http://localhost:${PORT}`);
-    console.log(`Admin dashboard at    http://localhost:${PORT}/admin`);
+app.listen(PORT, "0.0.0.0", () => {
+ console.log(`Brew & Bean running on port ${PORT}`);
+console.log(`Admin dashboard at /admin`);
   });
 }
 

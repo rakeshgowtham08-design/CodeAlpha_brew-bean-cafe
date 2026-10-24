@@ -91,10 +91,10 @@
       </section>
 
       <section id="view-inventory" class="view" aria-labelledby="inventoryHeading" hidden>
-        <div class="section-heading"><div><p class="eyebrow">STOCK CONTROL</p><h2 id="inventoryHeading">Inventory</h2><p>Stock values reflect the Product schema; order placement does not currently decrement stock.</p></div><button class="button button-light" data-action="refresh-products" type="button">↻ Refresh</button></div>
+        <div class="section-heading"><div><p class="eyebrow">INVENTORY MANAGEMENT</p><h2 id="inventoryHeading">Inventory &amp; Low Stock Alerts</h2><p>Real-time stock levels from MongoDB. Order placement automatically decrements stock. Low-stock threshold is configurable via LOW_STOCK_THRESHOLD.</p></div><button class="button button-light" data-action="refresh-products" type="button">↻ Refresh</button></div>
         <div id="inventorySummary" class="stat-grid"></div>
-        <div class="toolbar panel"><label class="search-control"><span aria-hidden="true">⌕</span><input id="inventorySearch" type="search" placeholder="Search inventory" aria-label="Search inventory"></label><label>Stock view<select id="inventoryFilter"><option value="all">All stock</option><option value="low">Low stock (&lt; 10)</option><option value="out">Out of stock</option></select></label></div>
-        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Current stock</th><th>Adjust stock</th></tr></thead><tbody id="inventoryBody"></tbody></table></div><div class="pagination" id="inventoryPagination"></div></div>
+        <div class="toolbar panel"><label class="search-control"><span aria-hidden="true">⌕</span><input id="inventorySearch" type="search" placeholder="Search inventory" aria-label="Search inventory"></label><label>Stock view<select id="inventoryFilter"><option value="all">All stock</option><option value="low">Low stock</option><option value="out">Out of stock</option></select></label></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Status</th><th>Current stock</th><th>Adjust stock</th></tr></thead><tbody id="inventoryBody"></tbody></table></div><div class="pagination" id="inventoryPagination"></div></div>
       </section>
 
       <section id="view-customers" class="view" aria-labelledby="customersHeading" hidden>

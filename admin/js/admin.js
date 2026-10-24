@@ -348,23 +348,32 @@ async function renameCategory(from) {
 }
 
 function inventoryParams(page) { return query({ page, limit: PAGE_SIZE, search: document.getElementById('inventorySearch').value.trim(), stock: document.getElementById('inventoryFilter').value === 'all' ? '' : document.getElementById('inventoryFilter').value }); }
+function stockStatus(stock, threshold) {
+  if (stock === 0) return { label: 'Out of stock', cls: 'stock-out' };
+  if (stock < threshold) return { label: 'Low stock', cls: 'stock-low' };
+  return { label: 'In stock', cls: 'stock-good' };
+}
 async function loadInventory() {
   const target = document.getElementById('inventoryBody');
-  target.innerHTML = '<tr><td class="loading-row" colspan="4">Loading inventory…</td></tr>';
+  target.innerHTML = '<tr><td class="loading-row" colspan="5">Loading inventory…</td></tr>';
   try {
     const [result, summary] = await Promise.all([
       api(`/products?${inventoryParams(state.page.inventory)}`),
       api('/products/inventory/summary'),
     ]);
     const products = result.products || [];
+    const threshold = Number(summary.lowStockThreshold || 10);
     renderStats('inventorySummary', [
       { label: 'Products', value: summary.total, note: 'Entire catalog' },
-      { label: 'Low stock', value: summary.lowStock, note: `1–${summary.lowStockThreshold - 1} units` },
+      { label: 'Low stock', value: summary.lowStock, note: `1–${threshold - 1} units` },
       { label: 'Out of stock', value: summary.outOfStock, note: 'No units available' },
     ]);
-    document.getElementById('inventoryBody').innerHTML = products.length ? products.map(product => `<tr><td><div class="product-cell"><img src="${escapeHtml(product.image)}" alt=""><span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(product._id.slice(-6))}</small></span></div></td><td>${escapeHtml(product.category)}</td><td class="${product.stock < 10 ? (product.stock === 0 ? 'stock-out' : 'stock-low') : 'stock-good'}">${Number(product.stock)}</td><td><form class="stock-editor" data-stock-form="${escapeHtml(product._id)}"><input name="stock" type="number" min="0" step="1" value="${Number(product.stock)}" aria-label="New stock for ${escapeHtml(product.name)}" required><button class="button button-light button-small" type="submit">Save</button></form></td></tr>`).join('') : '<tr><td class="empty-cell" colspan="4">No inventory items match this filter.</td></tr>';
+    document.getElementById('inventoryBody').innerHTML = products.length ? products.map(product => {
+      const status = stockStatus(product.stock, threshold);
+      return `<tr><td><div class="product-cell"><img src="${escapeHtml(product.image)}" alt=""><span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(product._id.slice(-6))}</small></span></div></td><td>${escapeHtml(product.category)}</td><td><span class="status-badge ${status.cls}">${status.label}</span></td><td class="${status.cls}">${Number(product.stock)}</td><td><form class="stock-editor" data-stock-form="${escapeHtml(product._id)}"><input name="stock" type="number" min="0" step="1" value="${Number(product.stock)}" aria-label="New stock for ${escapeHtml(product.name)}" required><button class="button button-light button-small" type="submit">Save</button></form></td></tr>`;
+    }).join('') : '<tr><td class="empty-cell" colspan="5">No inventory items match this filter.</td></tr>';
     drawPagination('inventoryPagination', 'inventory', result.pagination);
-  } catch (error) { setRowMessage('inventoryBody', 4, error.message); }
+  } catch (error) { setRowMessage('inventoryBody', 5, error.message); }
 }
 async function updateStock(form) {
   const id = form.dataset.stockForm;

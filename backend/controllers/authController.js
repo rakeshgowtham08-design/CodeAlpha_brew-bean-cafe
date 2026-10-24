@@ -126,6 +126,13 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+// POST /api/auth/logout  (requires auth)
+exports.logout = async (req, res) => {
+  // JWT is stateless — the server cannot revoke a token.
+  // The client clears its stored token; this endpoint acknowledges the logout.
+  res.json({ message: 'Logged out successfully.' });
+};
+
 // GET /api/auth/me  (requires auth middleware)
 exports.me = async (req, res) => {
   const user = await User.findById(req.user.id);

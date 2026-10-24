@@ -68,9 +68,16 @@ async function run() {
     throw new Error('ADMIN_EMAIL belongs to a non-admin account. No products were changed; choose another email.');
   }
 
-  await Product.deleteMany({});
-  await Product.insertMany(products);
-  console.log(`Seeded ${products.length} products.`);
+  // Idempotent upsert: keep existing _id so cart references stay valid.
+  // Products are matched by name; details are updated if changed.
+  for (const product of products) {
+    await Product.updateOne(
+      { name: product.name },
+      { $set: product },
+      { upsert: true, setDefaultsOnInsert: true }
+    );
+  }
+  console.log(`Seeded ${products.length} products (idempotent upsert).`);
 
   if (existingAdmin) {
     console.log(`Existing administrator account retained: ${adminEmail}.`);

@@ -23,6 +23,7 @@
     <div class="nav-icons">
       <a href="menu.html" title="Search" aria-label="Search menu">🔍</a>
       <a href="#" class="nav-user-slot"></a>
+      <a href="#" class="nav-logout" title="Logout">🚪 Logout</a>
       <a href="/cart.html" title="Cart">🛒<span class="badge-dot cart-badge">0</span></a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
     </div>
@@ -190,7 +191,7 @@ function cardHTML(p) {
   return `
     <div class="product-card">
       <a class="imgwrap" href="/product.html?id=${encodeURIComponent(p._id)}">
-        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy">
+        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='/images/coffee.svg';">
         ${badgeLabel ? `<span class="product-badge ${escapeHTML(p.badge)}">${badgeLabel}</span>` : ''}
         <button class="wishlist-btn" data-wish="${escapeHTML(p._id)}">♡</button>
       </a>
@@ -224,6 +225,16 @@ function bindAddButtons() {
   });
 }
 loadFeatured();
+
+const params = new URLSearchParams(location.search);
+if (params.get('loggedout') === '1') {
+  const alertDiv = document.createElement('div');
+  alertDiv.className = 'alert ok';
+  alertDiv.textContent = 'You have been logged out successfully.';
+  const root = document.querySelector('.container') || document.body;
+  root.insertBefore(alertDiv, root.firstChild);
+  setTimeout(() => alertDiv.remove(), 5000);
+}
 </script>
 </body>
 </html>

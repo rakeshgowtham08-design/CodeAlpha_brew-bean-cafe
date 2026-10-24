@@ -78,12 +78,13 @@ exports.categories = async (req, res) => {
 };
 
 exports.inventorySummary = async (req, res) => {
+  const threshold = Number(process.env.LOW_STOCK_THRESHOLD || 10);
   const [total, lowStock, outOfStock] = await Promise.all([
     Product.countDocuments(),
-    Product.countDocuments({ stock: { $gt: 0, $lt: 10 } }),
+    Product.countDocuments({ stock: { $gt: 0, $lt: threshold } }),
     Product.countDocuments({ stock: 0 }),
   ]);
-  res.json({ total, lowStock, outOfStock, lowStockThreshold: 10 });
+  res.json({ total, lowStock, outOfStock, lowStockThreshold: threshold });
 };
 
 exports.renameCategory = async (req, res) => {

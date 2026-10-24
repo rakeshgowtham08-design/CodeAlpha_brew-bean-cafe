@@ -17,6 +17,7 @@
     </div>
     <div class="nav-icons">
       <a href="#" class="nav-user-slot"></a>
+      <a href="#" class="nav-logout" title="Logout">🚪 Logout</a>
       <a href="/cart.html" title="Cart">🛒<span class="badge-dot cart-badge">0</span></a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
     </div>
@@ -134,7 +135,7 @@ function cardHTML(p) {
   return `
     <div class="product-card">
       <a class="imgwrap" href="/product.html?id=${encodeURIComponent(p._id)}">
-        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy">
+        <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='/images/coffee.svg';">
         ${badgeLabel ? `<span class="product-badge ${escapeHTML(p.badge)}">${badgeLabel}</span>` : ''}
         <button class="wishlist-btn" data-wish="${escapeHTML(p._id)}">♡</button>
       </a>

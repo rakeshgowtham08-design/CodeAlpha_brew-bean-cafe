@@ -72,6 +72,11 @@ exports.create = async (req, res) => {
       const product = await Product.findById(productId);
       if (!product) return res.status(400).json({ error: `A product in your cart no longer exists.` });
       if (!Number.isInteger(qty) || qty < 1) return res.status(400).json({ error: `Invalid quantity for ${product.name}.` });
+      if (product.stock < qty) {
+        return res.status(400).json({
+          error: `Insufficient stock for ${product.name}. Only ${product.stock} left in stock.`,
+        });
+      }
 
       subtotal += product.price * qty;
       resolvedItems.push({
@@ -98,6 +103,11 @@ exports.create = async (req, res) => {
       gst,
       total,
     });
+
+    // Decrement stock atomically for each ordered product (prevents overselling).
+    await Promise.all(resolvedItems.map((item) =>
+      Product.findByIdAndUpdate(item.product, { $inc: { stock: -item.quantity } }, { new: true })
+    ));
 
     res.status(201).json({ order });
   } catch (err) {
@@ -179,7 +189,7 @@ exports.stats = async (req, res) => {
     User.countDocuments({ role: 'customer' }),
     Order.countDocuments({ status: { $ne: 'delivered' } }),
     Order.countDocuments({ status: 'delivered' }),
-    Product.countDocuments({ stock: { $lt: 10 } }),
+    Product.countDocuments({ stock: { $lt: Number(process.env.LOW_STOCK_THRESHOLD || 10) } }),
     Order.aggregate([
       { $match: rangeMatch },
       { $unwind: '$items' },

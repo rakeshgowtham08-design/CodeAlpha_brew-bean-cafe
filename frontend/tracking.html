@@ -10,14 +10,21 @@
 <nav class="nav scrolled"><div class="nav-inner">
   <a href="/" class="logo">☕ BREW & BEAN</a>
   <div class="nav-links"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a></div>
-  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
+  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="#" class="nav-logout" title="Logout">🚪 Logout</a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
   <button class="hamburger" id="hamburgerBtn">☰</button></div>
-</div><div id="mobileMenu"><a href="/">Home</a></div></nav>
+</div><div id="mobileMenu"><a href="/">Home</a><a href="/tracking.html">Track Order</a><a href="#" class="nav-logout" style="display:block;margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:6px;text-align:center;color:var(--espresso);">Logout</a></div></nav>
 
 <header class="page-header"><div class="container"><h1>Track Your Order</h1><p>Follow your order from kitchen to doorstep.</p></div></header>
 
 <main class="container" style="padding:50px 0 90px;">
   <div id="root"><p class="muted">Loading…</p></div>
+  <div style="max-width:420px;margin-top:30px;">
+    <div style="border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:26px;">
+      <h3 style="margin-top:0;">Account</h3>
+      <p class="muted" style="margin-bottom:16px;">Manage your account session.</p>
+      <button class="btn outline-dark full" id="customerLogoutBtn" type="button">🚪 Logout</button>
+    </div>
+  </div>
 </main>
 
 <footer><div class="container"><div class="footer-bottom">© 2026 Brew & Bean Café. All rights reserved.</div></div></footer>
@@ -79,6 +86,11 @@ async function renderOne(id) {
 }
 
 init();
+
+document.getElementById('customerLogoutBtn')?.addEventListener('click', async () => {
+  await customerLogout();
+  window.location.href = '/login.html?loggedout=1';
+});
 </script>
 </body>
 </html>

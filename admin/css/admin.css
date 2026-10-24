@@ -159,6 +159,9 @@ tbody tr:hover{background:#fdfaf4}
 .stock-low{color:#95611f;font-weight:700}
 .stock-out{color:var(--red);font-weight:700}
 .stock-good{color:var(--sage);font-weight:700}
+.status-badge.stock-low{background:#f7e9e5;color:#7f3428}
+.status-badge.stock-out{background:#f7e9e5;color:#a44f3f}
+.status-badge.stock-good{background:#e8eee5;color:#60775f}
 .stock-editor{display:flex;align-items:center;gap:7px}
 .stock-editor input{width:82px;padding:7px;font-size:11px}
 .date-range{display:flex;align-items:flex-end;gap:9px}

@@ -1,9 +1,15 @@
 // frontend/js/common.js
 // Shared across every page: API wrapper, auth/session helpers, cart
 // (persisted in localStorage per the spec), and nav rendering/behavior.
+//
+// API_BASE defaults to '/api' because the frontend and backend are served
+// by the same Express service (see backend/server.js). To point at a
+// separate backend service, set window.API_BASE before this script loads:
+//   <script>window.API_BASE = 'https://your-api.onrender.com/api';</script>
+//   <script src="js/common.js"></script>
+// Never hardcode a production URL here.
 
-const API_BASE = '/api';
-
+const API_BASE = (typeof window !== 'undefined' && window.API_BASE) || '/api';
 function escapeHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -19,7 +25,12 @@ async function api(path, options = {}) {
     },
     ...options,
   });
-  const data = await res.json().catch(() => ({}));
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
   if (!res.ok) throw new Error(data.error || 'Something went wrong.');
   return data;
 }
@@ -36,6 +47,15 @@ function setSession(token, user) {
 function clearSession() {
   localStorage.removeItem('bb_token');
   localStorage.removeItem('bb_user');
+}
+
+async function customerLogout() {
+  try {
+    await api('/auth/logout', { method: 'POST' });
+  } catch {
+    // Ignore API errors — always clear local session regardless.
+  }
+  clearSession();
 }
 
 const Cart = {
@@ -80,7 +100,7 @@ function initNav() {
       : `<a href="/login.html" title="Login">👤 Login</a>`;
   });
   document.querySelectorAll('.nav-logout').forEach((el) => {
-    if (user) { el.style.display = ''; el.addEventListener('click', (e) => { e.preventDefault(); clearSession(); window.location.href = '/'; }); }
+    if (user) { el.style.display = ''; el.addEventListener('click', async (e) => { e.preventDefault(); await customerLogout(); window.location.href = '/?loggedout=1'; }); }
     else el.style.display = 'none';
   });
 

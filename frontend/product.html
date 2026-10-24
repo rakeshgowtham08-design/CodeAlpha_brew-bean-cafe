@@ -10,9 +10,9 @@
 <nav class="nav scrolled"><div class="nav-inner">
   <a href="/" class="logo">☕ BREW & BEAN</a>
   <div class="nav-links"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a><a href="/#offers">Offers</a><a href="/tracking.html">Track Order</a></div>
-  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
+  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="#" class="nav-logout" title="Logout">🚪 Logout</a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
   <button class="hamburger" id="hamburgerBtn">☰</button></div>
-</div><div id="mobileMenu"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a><a href="/cart.html">Cart</a></div></nav>
+</div><div id="mobileMenu"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a><a href="/cart.html">Cart</a><a href="#" class="nav-logout" style="display:block;margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:6px;text-align:center;color:var(--espresso);">Logout</a></div></nav>
 
 <main class="container" style="padding-top:140px;padding-bottom:80px;">
   <div id="root"><p class="muted">Loading…</p></div>
@@ -34,7 +34,7 @@ async function load() {
     root.innerHTML = `
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;">
         <div style="position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
-          <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+          <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" style="width:100%;aspect-ratio:4/3;object-fit:cover;" onerror="this.onerror=null;this.src='/images/coffee.svg';">
           ${badgeLabel ? `<span class="product-badge ${p.badge}" style="top:16px;left:16px;">${badgeLabel}</span>` : ''}
         </div>
         <div>

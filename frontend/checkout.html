@@ -10,7 +10,7 @@
 <nav class="nav scrolled"><div class="nav-inner">
   <a href="/" class="logo">☕ BREW & BEAN</a>
   <div class="nav-links"><a href="/">Home</a><a href="/menu.html">Menu</a><a href="/about.html">About</a></div>
-  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
+  <div class="nav-icons"><a href="#" class="nav-user-slot"></a><a href="#" class="nav-logout" title="Logout">🚪 Logout</a><a href="/cart.html">🛒<span class="badge-dot cart-badge">0</span></a>
   <button class="hamburger" id="hamburgerBtn">☰</button></div>
 </div><div id="mobileMenu"><a href="/">Home</a><a href="/menu.html">Menu</a></div></nav>
 
@@ -54,12 +54,10 @@ function render(user) {
       <div>
         <h3 style="margin-bottom:14px;">Customer Information</h3>
         <div class="form-row">
-          <div class="field"><label>Name</label><input id="cName" value="${user.name}"></div>
           <div class="field"><label>Name</label><input id="cName" value="${escapeHTML(user.name)}"></div>
           <div class="field"><label>Phone</label><input id="cPhone" value="${escapeHTML(user.phone || '')}"></div>
         </div>
-        <div class="field"><label>Email</label><input id="cEmail" value="${user.email}"></div>
-  <div class="field"><label>Email</label><input id="cEmail" value="${escapeHTML(user.email)}"></div>
+        <div class="field"><label>Email</label><input id="cEmail" value="${escapeHTML(user.email)}"></div>
 
         <h3 style="margin:30px 0 14px;">Delivery Address</h3>
         <div class="form-row">
@@ -81,8 +79,7 @@ function render(user) {
 
       <div class="summary-card">
         <h3 style="margin-bottom:16px;">Order Summary</h3>
-        ${cartItems.map((i) => { const p = productMap[i.productId]; return p ? `<div class="summary-line"><span>${p.name} × ${i.qty}</span><span>${rupees(p.price*i.qty)}</span></div>` : ''; }).join('')}
-          ${cartItems.map((i) => { const p = productMap[i.productId]; return p ? `<div class="summary-line"><span>${escapeHTML(p.name)} × ${escapeHTML(i.qty)}</span><span>${rupees(p.price*Number(i.qty))}</span></div>` : ''; }).join('')}
+        ${cartItems.map((i) => { const p = productMap[i.productId]; return p ? `<div class="summary-line"><span>${escapeHTML(p.name)} × ${escapeHTML(i.qty)}</span><span>${rupees(p.price*Number(i.qty))}</span></div>` : ''; }).join('')}
         <div class="summary-line"><span>Subtotal</span><span id="sSubtotal">${rupees(t.subtotal)}</span></div>
         <div class="summary-line"><span>Delivery</span><span id="sDelivery">${rupees(t.deliveryFee)}</span></div>
         <div class="summary-line"><span>GST (5%)</span><span id="sGst">${rupees(t.gst)}</span></div>
@@ -151,8 +148,6 @@ async function placeOrder() {
   } catch (err) {
     alertBox.textContent = err.message;
     alertBox.className = 'alert error';
-      alertBox.textContent = err.message;
-      alertBox.className = 'alert error';
     btn.disabled = false; btn.textContent = 'Place Order';
   }
 }

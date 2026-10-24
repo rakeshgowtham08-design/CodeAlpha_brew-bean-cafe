@@ -91,6 +91,14 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 });
 
 syncMode();
+
+const params = new URLSearchParams(location.search);
+if (params.get('loggedout') === '1') {
+  const box = document.getElementById('alertBox');
+  box.textContent = 'You have been logged out successfully.';
+  box.className = 'alert ok';
+  setTimeout(() => { box.innerHTML = ''; }, 5000);
+}
 </script>
 </body>
 </html>

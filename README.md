@@ -106,6 +106,10 @@ Then open:
 - **Storefront:** http://localhost:4000
 - **Admin dashboard:** http://localhost:4000/admin
 
+LIVE WEBSITE LINKS:
+-https://brew-bean-cafe.onrender.com
+-https://brew-bean-cafe.onrender.com/admin
+
 Password recovery uses a one-time link that expires after one hour. Configure
 `APP_URL` and the `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`,
 `SMTP_PASS`, and optional `SMTP_FROM` values in `.env` to deliver reset emails.
